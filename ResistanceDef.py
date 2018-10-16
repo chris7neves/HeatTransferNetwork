@@ -53,7 +53,16 @@ def rescalc(res, temp):
         R5 = L5 / (K5 * A5)
         return R5
     elif res == "R6":
-
+        L6 = 0.5 * CH
+        A6 = 0.5 * FW * ETHCK
+        K6 = Materials.materialDict[UserInputs.liner_mat].k(temp)
+        R6 = L6 / K6 * A6
     elif res == "R7":
-
+        K7 = Materials.materialDict[UserInputs.jacket_mat].k(temp)
+        L7 = JH
+        A7 = 0.5 * FW * ETHCK
+        R7 = L7 / K7 * A7
     elif res == "R8":
+        H8 = UserInputs.air_coeff
+        A8 = EW * ETHCK
+        R8 = 1 / H8 * A8

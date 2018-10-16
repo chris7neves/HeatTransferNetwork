@@ -1,7 +1,9 @@
 import Materials
 
 
-
+#  Create error Norm
+#  while loop
+#  output values
 
 
 
