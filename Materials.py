@@ -29,8 +29,15 @@ class Coolant:
 
     fuelflow = UserInputs.coolant_flowrate
 
-    def __init__(self, t_dependance, viscosity_coolant, cp_coolant, k_coolant):
-        self.t_dependance = t_dependance
+    def __init__(self, t_dependance_cp, t_dependance_v, viscosity_coolant, cp_coolant, k_coolant):
+        self.t_dependance_v = t_dependance_v
+        self.t_dependance_cp = t_dependance_cp
+
+        if self.t_dependance_cp: # TODO: Define this temperature variation along with the viscosity one
+
+        else:
+            self.cp_coolant = cp_coolant
+
         self.viscosity_coolant = viscosity_coolant
         self.cp_coolant = cp_coolant
         self.k_coolant = k_coolant
@@ -46,7 +53,7 @@ class Coolant:
         term1 = (0.029 * self.cp_coolant * (self.viscosity_coolant ** 0.2)) / (Pr ** (2/3))
         term2 = (G ** 0.8) / (self.hydraulic_dia ** 0.2)
         term3 = (t_bulk / t_wall) ** 0.55
-        h_coolant = term1 * term2 * term3*
+        h_coolant = term1 * term2 * term3
         return h_coolant
 
 
@@ -72,4 +79,4 @@ materialDict = {"inconel": inconel, "al6061": al6061, "soot": soot}
 
 # Combustion Gas Heat Transfer Calculator
 
-hG = None  # TODO: Define the hot gas heat transfer coefficient equation
+

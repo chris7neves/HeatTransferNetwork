@@ -5,9 +5,9 @@ import Materials
 #  while loop
 #  output values
 
+# TODO: Define the hot gas heat transfer coefficient equation. Needs to be a function
 
-
-
+def hG()
 
 
 
