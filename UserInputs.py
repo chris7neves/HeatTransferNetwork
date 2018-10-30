@@ -1,17 +1,31 @@
+### MAKE SURE ALL QUANTITIES ARE IN IMPERIAL ###
 
-# All values that need to be input by the user go here.
 # To define material properties, go to "Materials.py"
-
-unit_system = "Imperial"
 
 liner_mat = "inconel"
 coating_mat = "soot"
 jacket_mat = "al6061"
-coolant = "jet_A"
-coolant_flowrate = 1
+coolant = "jetA"
+
+# To define material properties, go to "Materials.py"
+
+coolant_flowrate = 3.3  # lb/sec
 num_channels = 96
-air_coeff = 1  # Enter the h of ambient air. This is a user input to acomodate imperial or metric units.
+air_coeff = 1.0  # Enter the h of ambient air. This is a user input to acomodate imperial or metric units.
+nozzleinlet_temp = 6390  # Rankine
+nozzleinlet_pressure = 375  # Psia
+c_star = 5820.86  # From CEA - ft/s
+gamma = 1.32  # From CEA
+cp_gas = 0.804
+throat_dia = 3.79
+throat_rad_curvature = 0.5
+combustion_gas_molecular_weight = 22.5  # In lb/mol for imperial
+mach_number_inlet = 1.14
+
+chamber_mach_number = 0.258
+throat_mach_number = 0.784  # Is the Mach number for the throat only 1 value?
+nozzle_mach_number = 3.07  # Is the Mach number for the nozzle only 1 value?
 
 
 
-# TODO: Maybe write a small script that gets relevant information from CEA output?
+

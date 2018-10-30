@@ -5,7 +5,7 @@ import ResistanceDef
 # return their h or k values.
 
 
-class Material: # IMPORTANT: Make sure to accurately assign t_dependance and k!
+class Material:  # IMPORTANT: Make sure to accurately assign t_dependance and k!
 
     def __init__(self, t_dependance, k, density):
         self.t_dependance = t_dependance
@@ -22,40 +22,44 @@ class Material: # IMPORTANT: Make sure to accurately assign t_dependance and k!
                     self.kFinal = self.__k[t]
             return self.kFinal
 
-# TODO: Finish coolant class
-
 
 class Coolant:
 
-    fuelflow = UserInputs.coolant_flowrate
-
-    def __init__(self, t_dependance_cp, t_dependance_v, viscosity_coolant, cp_coolant, k_coolant):
-        self.t_dependance_v = t_dependance_v
-        self.t_dependance_cp = t_dependance_cp
-
-        if self.t_dependance_cp: # TODO: Define this temperature variation along with the viscosity one
-
-        else:
-            self.cp_coolant = cp_coolant
-
+    def __init__(self, viscosity_coolant, cp_coolant, k_coolant):
         self.viscosity_coolant = viscosity_coolant
         self.cp_coolant = cp_coolant
         self.k_coolant = k_coolant
-        self.hydraulic_dia = self.d()
+        self.d = (ResistanceDef.CW * ResistanceDef.CH) / (ResistanceDef.CW + ResistanceDef.CH)
 
-    def d(self):
-        d = (UserInputs.CW * UserInputs.CH) / (UserInputs.CW + UserInputs.CH)
-        return d
+    def c_viscosity(self, temp=None):  # Should also add option to calculate viscosity using molar mass and temp.
+        tempvisc = None
+        for t in self.viscosity_coolant:
+            if temp >= t:
+                tempvisc = self.viscosity_coolant[t]
+        return tempvisc
+
+    def c_cp(self, temp=None):
+        tempcp = None
+        for t in self.cp_coolant:
+            if temp >= t:
+                tempcp = self.cp_coolant[t]
+        return tempcp
+
+    def c_k(self, temp=None):
+        tempk = None
+        for t in self.k_coolant:
+            if t >= temp:
+                tempk = self.k_coolant[t]
+        return tempk
 
     def h_coolant(self, t_wall, t_bulk):
-        Pr = (self.viscosity_coolant * self.cp_coolant) / self.k_coolant
+        Pr = (self.c_viscosity(t_bulk) * self.c_cp(t_bulk)) / self.c_k(t_bulk)
         G = UserInputs.coolant_flowrate / (UserInputs.num_channels * ResistanceDef.CH * ResistanceDef.CW)
-        term1 = (0.029 * self.cp_coolant * (self.viscosity_coolant ** 0.2)) / (Pr ** (2/3))
-        term2 = (G ** 0.8) / (self.hydraulic_dia ** 0.2)
+        term1 = (0.029 * self.c_cp(t_bulk) * (self.c_viscosity(t_bulk) ** 0.2)) / (Pr ** (2/3))
+        term2 = (G ** 0.8) / (self.d ** 0.2)
         term3 = (t_bulk / t_wall) ** 0.55
         h_coolant = term1 * term2 * term3
         return h_coolant
-
 
 
 # MATERIALS
@@ -73,10 +77,12 @@ materialDict = {"inconel": inconel, "al6061": al6061, "soot": soot}
 
 # COOLANTS
 
-# TODO: Create coolant dictionnary and add jet-A as a coolant
+jetA_k_var = {100: 80, 200: 90, 5000: 100}
+jetA_cp_var = {100: 0.004, 200: 0.005, 5000: 0.006}
+jetA_visc_var = {100: 0.000004, 200: 0.000005, 5000: 0.000006}  # viscosity in lb/in-s
+jetA = Coolant(viscosity_coolant=jetA_visc_var, cp_coolant=jetA_cp_var, k_coolant=jetA_k_var)
 
-# jetA = Coolant()
+coolantdict = {"jetA": jetA}
 
-# Combustion Gas Heat Transfer Calculator
 
 
