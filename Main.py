@@ -6,11 +6,11 @@ import ConvergenceCheck
 ####  FILL OUT BEFORE RUNNING SIMULATION ####
 g = 32.2  # Gravitational Acceleration
 dia = 3.79  # Radius at point of interest
-engineaxis_temp = 5400  # Temperature at the point along the engine axis of interest.
+engineaxis_temp = 5889.6  # Temperature at the point along the engine axis of interest.
 iterations = 1000  # Maximum number of iterations
 analysis_location = "throat"  # Can be "chamber", "throat", "nozzle"
 # Constant Temps #
-tg = 5472
+tg = 5889.6
 tcoolant = 761.67
 tinf = 528.67
 # Initial Guesses #
@@ -22,6 +22,11 @@ tf = 1391
 tow = 1391
 tj = 1391
 #############################################
+
+
+
+
+
 
 #  TODO: Coolant temperatures need to be defined for the engine length.
 def hG(temp_ts, location):  # The combustion temperature along the engine axis at the point that is being analyzed should be passed to this along with soot temperature temp_ts.

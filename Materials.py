@@ -71,7 +71,7 @@ al6061_k_var = {None}
 al6061 = Material(t_dependance=False, k=3.0, density=1.0)
 
 soot_k_var = {None}
-soot = Material(t_dependance=False, k=1.0, density=1.0)  # TODO: Add the k of soot from soot document
+soot = Material(t_dependance=False, k=0.000007, density=1.0)  # Units of soot here are BTU/(in. Sec F). Check the bible to see if ok
 
 materialDict = {"inconel": inconel, "al6061": al6061, "soot": soot}
 
