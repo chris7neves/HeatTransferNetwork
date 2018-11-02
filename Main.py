@@ -23,7 +23,14 @@ tow = 1391
 tj = 1391
 #############################################
 
+if analysis_location == "chamber":
 
+elif analysis_location == "throat":
+
+elif analysis_location == "nozzle":
+
+else:
+    print("The analysis location was either not specified or incorrect.\n")
 
 
 
