@@ -5,14 +5,15 @@ import UserInputs
 # resistances. Refer to the attached image to see what the particular variable name
 # refers to.
 
-JH = 0.609705
-FW = 0.02952756  # Check actual fin thickness
-CW = 0.02952756
-CH = 0.177165
-LH = 0.06212998
-EW = 0.0590551
-SH = 0.001
-ETHCK = 0.5
+# All measurements in inches
+JH = 0.609705 #TODO
+FW = 0.02952756#TODO  # Check actual fin thickness
+CW = 0.02952756#TODO
+CH = 0.177165#TODO
+LH = 0.06212998#TODO
+EW = 0.0590551#TODO
+SH = 0.001#TODO
+ETHCK = 0.5#TODO
 
 
 # RG

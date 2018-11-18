@@ -4,48 +4,45 @@ import ResistanceDef
 import ConvergenceCheck
 
 ####  FILL OUT BEFORE RUNNING SIMULATION ####
-g = 32.2  # Gravitational Acceleration
-dia = 3.79  # Radius at point of interest
-engineaxis_temp = 5889.6  # Temperature at the point along the engine axis of interest.
-iterations = 1000  # Maximum number of iterations
-analysis_location = "throat"  # Can be "chamber", "throat", "nozzle"
+g = 32.2  # Gravitational Acceleration. 32.2
+iterations = 100000  # Maximum number of iterations
+analysis_location = "nozzle"  # Can be "chamber", "throat", "nozzle"
 # Constant Temps #
-tg = 5889.6
-tcoolant = 761.67
-tinf = 528.67
+tinf = 528.67  # R
 # Initial Guesses #
-ts = 1391
-twg = 1391
-tcw1 = 1391
-tcw2 = 1391
-tf = 1391
-tow = 1391
-tj = 1391
+ts = 2000  # R
+twg = 2000  # R
+tcw1 = 2000  # R
+tcw2 = 2000  # R
+tf = 2000  # R
+tow = 2000  # R
+tj = 2000  # R
 #############################################
 
 if analysis_location == "chamber":
-
+    tg = 6232.392  # R
+    tcoolant = 1031.67  # R
+    dia = 8.1417  # Diameter at point of interest in inches
+    mach_number = UserInputs.chamber_mach_number
+    cp_gas = 1.4237
 elif analysis_location == "throat":
-
+    tg = 5900  # R
+    tcoolant = 761.67  # R
+    dia = 3.64129  # Diameter at point of interest in inches
+    mach_number = UserInputs.throat_mach_number
+    cp_gas = 1.302283
 elif analysis_location == "nozzle":
-
+    tg = 4287.6  # R
+    tcoolant = 529.47  # R
+    dia = 7.8  # Diameter at point of interest in inches
+    mach_number = UserInputs.nozzle_mach_number
+    cp_gas = 0.59797
 else:
     print("The analysis location was either not specified or incorrect.\n")
 
 
-
-
-#  TODO: Coolant temperatures need to be defined for the engine length.
+# TODO: Coolant temperatures need to be defined for the engine length.
 def hG(temp_ts, location):  # The combustion temperature along the engine axis at the point that is being analyzed should be passed to this along with soot temperature temp_ts.
-    if location == "throat":  # I think the formula for Pc ns only needs the mach number at the nozzle inlet, so the chamber mach number.
-        mach_number = UserInputs.throat_mach_number
-    elif location == "nozzle":
-        mach_number = UserInputs.nozzle_mach_number
-    elif location == "chamber":
-        mach_number = UserInputs.chamber_mach_number
-    else:
-        print("Error in hG. The location that hG is to be found is not specified. Assuming chamber.")
-        mach_number = UserInputs.chamber_mach_number
 
     area = 0.25 * (dia ** 2)
     area_throat = 0.25 * (UserInputs.throat_dia ** 2)
@@ -55,7 +52,7 @@ def hG(temp_ts, location):  # The combustion temperature along the engine axis a
     tc_ns = UserInputs.nozzleinlet_temp * (1 + (0.5 * (UserInputs.gamma - 1) * (UserInputs.mach_number_inlet ** 2)))  # Im pretty sure this can be replaced by temp_combustion
 
     term_1 = 0.026 * (1 / (UserInputs.throat_dia ** 0.2))
-    term_2 = ((gas_viscosity ** 0.2) * UserInputs.cp_gas) / (prandlt ** 0.6)
+    term_2 = ((gas_viscosity ** 0.2) * cp_gas) / (prandlt ** 0.6)
     term_3 = ((pc_ns * g) / UserInputs.c_star) ** 0.8
     term_4 = (UserInputs.throat_dia / UserInputs.throat_rad_curvature) ** 0.1
     term_5 = (area_throat / area) ** 0.9

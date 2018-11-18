@@ -48,38 +48,42 @@ class Coolant:
     def c_k(self, temp=None):
         tempk = None
         for t in self.k_coolant:
-            if t >= temp:
+            if temp >= t:
                 tempk = self.k_coolant[t]
         return tempk
 
     def h_coolant(self, t_wall, t_bulk):
-        Pr = (self.c_viscosity(t_bulk) * self.c_cp(t_bulk)) / self.c_k(t_bulk)
+        Pr = (self.c_viscosity(t_bulk) * self.c_cp(t_bulk)) / self.c_k(t_bulk)  # k needs to be in F here
         G = UserInputs.coolant_flowrate / (UserInputs.num_channels * ResistanceDef.CH * ResistanceDef.CW)
         term1 = (0.029 * self.c_cp(t_bulk) * (self.c_viscosity(t_bulk) ** 0.2)) / (Pr ** (2/3))
         term2 = (G ** 0.8) / (self.d ** 0.2)
         term3 = (t_bulk / t_wall) ** 0.55
         h_coolant = term1 * term2 * term3
+        print(h_coolant)
         return h_coolant
 
 
 # MATERIALS
 
-inconel_k_var = {100: 2.0, 200: 2.5, 300: 3.0}
-inconel = Material(t_dependance=False, k=5, density=2.6)
+inconel_k_var = {100: 2.0, 200: 2.5, 300: 3.0}  # k -> Btu/s-in-R, Temp -> R TODO
+inconel = Material(t_dependance=False, k=5, density=2.6) #TODO
 
-al6061_k_var = {None}
-al6061 = Material(t_dependance=False, k=3.0, density=1.0)
+al6061_k_var = {None}  # k -> Btu/s-in-R, Temp -> R
+al6061 = Material(t_dependance=False, k=0.0022335, density=0.0975)
 
-soot_k_var = {None}
+soot_k_var = {None}  # k -> Btu/s-in-R, Temp -> R
 soot = Material(t_dependance=False, k=0.000007, density=1.0)  # Units of soot here are BTU/(in. Sec F). Check the bible to see if ok
 
-materialDict = {"inconel": inconel, "al6061": al6061, "soot": soot}
+c18150_k_var = {None}  # k -> Btu/s-in-R, Temp -> R
+c18150 = Material(t_dependance=False, k=0.0043287, density=0.321)
+
+materialDict = {"inconel": inconel, "al6061": al6061, "soot": soot, "c18150": c18150}
 
 # COOLANTS
 
-jetA_k_var = {100: 80, 200: 90, 5000: 100}
-jetA_cp_var = {100: 0.004, 200: 0.005, 5000: 0.006}
-jetA_visc_var = {100: 0.000004, 200: 0.000005, 5000: 0.000006}  # viscosity in lb/in-s
+jetA_k_var = {1: 0.000001534}  # Btu/s-in-F TODO
+jetA_cp_var = {100: 0.5732}  # Btu/lb-F TODO
+jetA_visc_var = {1: 0.000016911}  # viscosity in lb/in-s
 jetA = Coolant(viscosity_coolant=jetA_visc_var, cp_coolant=jetA_cp_var, k_coolant=jetA_k_var)
 
 coolantdict = {"jetA": jetA}
