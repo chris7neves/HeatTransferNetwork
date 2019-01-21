@@ -2,6 +2,7 @@ import Materials
 import UserInputs
 import ResistanceDef
 import ConvergenceCheck
+import GUI
 
 ####  FILL OUT BEFORE RUNNING SIMULATION ####
 g = 32.2  # Gravitational Acceleration. 32.2
