@@ -1,5 +1,5 @@
  # HeatTransferNetwork
-Program attempting to perform a quasi 2-D heat transfer analysis of a liquid rocket engine. 
+Program attempting to perform a 2-D heat transfer analysis of a liquid rocket engine. 
 
 # The README is still a work in progress.
 
