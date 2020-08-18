@@ -1,4 +1,8 @@
- # HeatTransferNetwork
+THIS PROJECT NEEDS TO BE REFACTORED
+
+GUI NOT COMPLETED
+
+# HeatTransferNetwork
 Program attempting to perform a 2-D heat transfer analysis of a liquid rocket engine. 
 
 # The README is still a work in progress.
